@@ -1,0 +1,8 @@
+.navbar {
+    height: 5rem;  /* ✅ No space */
+}
+
+.fa-compass {
+    color: crimson;
+    font-size: 2rem;  /* ✅ No space */
+}

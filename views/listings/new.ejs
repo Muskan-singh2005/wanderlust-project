@@ -1,0 +1,55 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-sm-12">
+      <div class="card shadow-sm p-4">
+
+        <h3 class="mb-4 text-center">CREATE NEW LIST</h3>
+
+        <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input name="listing[title]" placeholder="Enter title" required class="form-control" />
+            <div class="valid-feedback">Title looks good!</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <input name="listing[description]" placeholder="Enter description" class="form-control" required />
+          </div>
+
+          <!-- Side-by-side row for Price and Country -->
+          <div class="row">
+            <div class="mb-3 col-md-6">
+              <label for="price" class="form-label">Price</label>
+              <input name="listing[price]" placeholder="Enter price" class="form-control" required />
+              <div class="invalid-feedback">Please enter a valid price</div>
+            </div>
+
+            <div class="mb-3 col-md-6">
+              <label for="country" class="form-label">Country</label>
+              <input name="listing[country]" placeholder="Enter country" class="form-control" required />
+              <div class="invalid-feedback">Country is required</div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input name="listing[location]" placeholder="Enter location" class="form-control" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="image" class="form-label">Upload Listing Image</label>
+            <input name="listing[image]" type="file" class="form-control" />
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" class="btn" style="background-color: #ff69b4; color: white;">ADD</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

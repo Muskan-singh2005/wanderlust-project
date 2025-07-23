@@ -1,0 +1,117 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6">
+      <img src="<%= listing.image.url %>" alt="<%= listing.title %>" class="img-fluid rounded shadow" />
+    </div>
+
+    <div class="col-md-6">
+      <h1 class="mb-3"><%= listing.title %></h1>
+      <p><strong>Price:</strong> ₹<%= listing.price %></p>
+      <p><strong>Location:</strong> <%= listing.location %></p>
+      <p><strong>Description:</strong> <%= listing.description %></p>
+
+      <div class="mt-3 d-flex gap-3">
+        <a href="/listings/<%= listing._id %>/edit" class="btn btn-sm" style="background-color: #ff69b4; color: white;">
+          ✏️ Edit this Listing
+        </a>
+
+        <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" class="d-inline">
+          <button class="btn btn-sm" style="background-color: black; color: white"
+                  onclick="return confirm('Are you sure you want to delete this listing?')">
+            🗑️ Delete this listing
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <hr class="my-5" />
+
+  <!-- Review Section -->
+  <div class="mt-4">
+    <h3>Add a Review</h3>
+
+    <form method="POST" action="/listings/<%= listing._id %>/reviews">
+      <div class="mb-3">
+        <label for="rating" class="form-label">Rating</label><br />
+
+        <fieldset class="starability-slot">
+          <input type="radio" id="rate5" name="review[rating]" value="5" />
+          <label for="rate5" title="Amazing">5 stars</label>
+
+          <input type="radio" id="rate4" name="review[rating]" value="4" />
+          <label for="rate4" title="Very good">4 stars</label>
+
+          <input type="radio" id="rate3" name="review[rating]" value="3" />
+          <label for="rate3" title="Average">3 stars</label>
+
+          <input type="radio" id="rate2" name="review[rating]" value="2" />
+          <label for="rate2" title="Not good">2 stars</label>
+
+          <input type="radio" id="rate1" name="review[rating]" value="1" />
+          <label for="rate1" title="Terrible">1 star</label>
+        </fieldset>
+      </div>
+
+      <div class="mb-3 mt-3">
+        <label for="comment" class="form-label">Comment</label>
+        <textarea name="review[comment]" id="comment" class="form-control" rows="3" required></textarea>
+      </div>
+
+      <button class="btn btn-primary">Add Review</button>
+    </form>
+
+    <hr class="my-4" />
+
+    <% if (listing.reviews.length > 0) { %>
+      <div class="row">
+        <p><b>All Reviews</b></p>
+      </div>
+    <% } %>
+
+    <% if (listing.reviews.length === 0) { %>
+      <p>No reviews yet.</p>
+    <% } else { %>
+      <ul class="list-group mb-4">
+        <% listing.reviews.forEach(review => { %>
+          <li class="list-group-item">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <h5 class="mb-1"><%= review.author?.username || "Anonymous" %></h5>
+                <strong><%= review.rating %> stars</strong>
+                <p><%= review.comment %></p>
+                <small><%= new Date(review.createdAt).toLocaleString() %></small>
+              </div>
+
+              <% if (currentUser && review.author && currentUser._id.toString() === review.author._id.toString()) { %>
+                <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="ms-3">
+                  <button class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this review?')">
+                    🗑️ Delete
+                  </button>
+                </form>
+              <% } %>
+            </div>
+          </li>
+        <% }); %>
+      </ul>
+    <% } %>
+  </div>
+
+  <!-- Map Section -->
+  <div class="col-6 offset-3 mb-3">
+    <h3>Where you'll be</h3>
+    <div id="map" style="height: 300px; border-radius: 8px;"></div>
+  </div>
+</div>
+
+<!-- Mapbox CSS & JS -->
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+
+<!-- Pass location to map.js -->
+<script>
+  const listingLocation = "<%= listing.location %>";
+</script>
+<script src="/js/map.js"></script>

@@ -1,0 +1,78 @@
+<style>
+  .btn-search {
+    background-color: pink;
+    color: white;
+    border: 1px solid hotpink;
+    border-radius: 25px;
+    padding:0 1rem 0 1rem;
+  }
+
+  .btn-search:hover {
+    background-color: hotpink;
+    color: white;
+  }
+
+    .btn-search i{
+      display: inline;
+      margin-right: 0.5rem;
+    }
+</style>
+
+<nav class="navbar navbar-expand-md navbar-light bg-light border-bottom sticky-top">
+  <div class="container-fluid">
+    <!-- Brand -->
+    <a class="navbar-brand" href="/listings">
+      <i class="fa-solid fa-compass text-pink" style="font-size: 22px;"></i>
+    </a>
+
+    <!-- Toggle button for small screens -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar content -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <!-- Left nav -->
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/listings">Explore</a>
+        </li>
+      </ul>
+
+      <!-- Centered search -->
+      <form class="d-flex mx-auto" action="/listings/search" method="GET" style="max-width: 400px; width: 100%;">
+        <input class="form-control form-control-sm me-1" type="search" name="q" placeholder="Search destinations" aria-label="Search">
+        <button class="btn btn-search btn-sm" type="submit"> <i class="fa-solid fa-magnifying-glass"></i>Search</button>
+       
+      </form>
+
+      <!-- Right nav -->
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/listings/new">Airbnb your home</a>
+        </li>
+        <% if (!currentUser) { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/signup"><b>Sign Up</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login"><b>Log In</b></a>
+          </li>
+        <% } else { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout"><b>Log Out</b></a>
+          </li>
+        <% } %>
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+<style>
+  .text-pink {
+    color: pink !important;
+  }
+</style>

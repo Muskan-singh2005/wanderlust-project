@@ -1,0 +1,149 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+  .blur-card {
+    transition: filter 0.3s ease, transform 0.3s ease;
+  }
+
+  .blur-card:hover {
+    filter: blur(1px);
+    transform: scale(1.01);
+  }
+
+  .filter {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    opacity: 0.7;
+  }
+
+  .filter:hover {
+    opacity: 1;
+  }
+
+  .filter i {
+    color: black;
+    font-size: 20px;
+  }
+
+  .filter p {
+    margin: 0;
+    font-size: 0.8rem;
+  }
+
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 20px;
+    padding: 0 2rem;
+  }
+
+  .filters-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    flex-grow: 1;
+  }
+
+  .tax-toggle {
+    border: 1px solid black;
+    border-radius: 1rem;
+    height: 2.5rem;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .tax-info {
+    display: none;
+    font-size: 0.85rem;
+    color: #555;
+  }
+
+  @media (max-width: 768px) {
+    .top-bar {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .filters-wrapper {
+      flex-wrap: wrap;
+    }
+
+    .tax-toggle {
+      margin-top: 1rem;
+    }
+  }
+</style>
+
+<!-- 🔘 Main Wrapper with NO side padding -->
+<div class="container-fluid px-0">
+  <!-- 🔘 Filters & Tax Toggle -->
+  <div class="top-bar">
+    <div class="filters-wrapper">
+      <div class="filter"><i class="fa-solid fa-fire"></i><p>Trending</p></div>
+      <div class="filter"><i class="fa-solid fa-bed"></i><p>Rooms</p></div>
+      <div class="filter"><i class="fa-solid fa-mountain-city"></i><p>Iconic cities</p></div>
+      <div class="filter"><i class="fa-solid fa-mountain"></i><p>Mountains</p></div>
+      <div class="filter"><i class="fa-brands fa-fort-awesome"></i><p>Castles</p></div>
+      <div class="filter"><i class="fa-solid fa-person-swimming"></i><p>Amazing pools</p></div>
+      <div class="filter"><i class="fa-solid fa-campground"></i><p>Camping</p></div>
+      <div class="filter"><i class="fa-solid fa-cow"></i><p>Farms</p></div>
+      <div class="filter"><i class="fa-regular fa-snowflake"></i><p>Arctic</p></div>
+      <div class="filter"><i class="fa-solid fa-igloo"></i><p>Domes</p></div>
+       <div class="filter"><i class="fa-solid fa-ship"></i><p>Ships</p></div>
+    </div>
+
+    <div class="tax-toggle">
+      <div class="form-check-reverse form-switch m-0">
+        <input class="form-check-input" type="checkbox" id="taxToggleSwitch">
+        <label class="form-check-label ms-2" for="taxToggleSwitch">Display taxes</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🏠 Listings with full-width row -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-4 gy-4 mx-0">
+    <% for (let listing of allListings) { %>
+      <div class="col d-flex">
+        <div class="card h-100 shadow-sm blur-card w-100">
+          <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
+            <img 
+              src="<%= listing.image?.url || 'https://via.placeholder.com/300' %>" 
+              alt="Image of <%= listing.title %>" 
+              class="card-img-top rounded" 
+              style="height: 270px; object-fit: cover;"
+            >
+            <div class="card-body">
+              <h5 class="card-title fw-semibold mb-1"><%= listing.title %></h5>
+              <p class="card-text text-muted mb-0">
+                ₹<%= listing.price %> / night 
+                <span class="tax-info">+18% GST</span>
+              </p>
+            </div>
+          </a>
+        </div>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<script>
+  const taxSwitch = document.getElementById("taxToggleSwitch");
+  taxSwitch.addEventListener("change", () => {
+    const taxInfoElements = document.getElementsByClassName("tax-info");
+    for (let info of taxInfoElements) {
+      info.style.display = taxSwitch.checked ? "inline" : "none";
+    }
+  });
+</script>

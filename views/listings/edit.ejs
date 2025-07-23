@@ -1,0 +1,49 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-sm-12">
+      <h3 class="mb-4 text-center">Edit Your Listing</h3>
+
+      <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" novalidate class="needs-validation">
+        
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" name="title" value="<%= listing.title %>" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <input type="text" name="description" value="<%= listing.description %>" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="image" class="form-label">Image Link</label>
+          <input type="text" name="image[url]" value="<%= listing.image?.url %>" class="form-control" required />
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" name="price" value="<%= listing.price %>" class="form-control" required />
+          </div>
+
+          <div class="mb-3 col-md-6">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" name="country" value="<%= listing.country %>" class="form-control" required />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <input type="text" name="location" value="<%= listing.location %>" class="form-control" required />
+        </div>
+
+        <div class="d-grid">
+          <button class="btn" style="background-color: #ff69b4; color: white;">EDIT</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
